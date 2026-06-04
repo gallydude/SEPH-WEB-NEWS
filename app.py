@@ -68,6 +68,24 @@ def get_month_options(n: int = 36) -> list[tuple[str, str]]:
     return options
 
 
+def is_past_month(month: str) -> bool:
+    return month < date.today().strftime("%Y-%m")
+
+
+def has_newsletter_data(month: str) -> bool:
+    try:
+        from src.database import init_db, _connect
+        init_db()
+        with _connect() as conn:
+            count = conn.execute(
+                "SELECT COUNT(*) FROM articles WHERE reference_month = ? AND included_in_newsletter = 1",
+                (month,),
+            ).fetchone()[0]
+        return count > 0
+    except Exception:
+        return False
+
+
 def load_articles(month: str) -> pd.DataFrame:
     from src.database import init_db, _connect
     init_db()
@@ -144,24 +162,59 @@ tab_run, tab_articles, tab_preview = st.tabs([
 with tab_run:
     st.markdown("### Generate Newsletter")
 
-    col_btn, col_skip = st.columns([1, 2])
-    with col_btn:
-        run_btn = st.button(
-            "▶  Run Full Pipeline", type="primary", use_container_width=True,
-        )
-    with col_skip:
-        no_collect = st.checkbox(
-            "Skip collection — reprocess articles already in the database",
-        )
+    _past_with_data = is_past_month(selected_month) and has_newsletter_data(selected_month)
 
-    if not inc_en and not inc_fr:
+    if _past_with_data:
+        st.info(
+            f"**{selected_label}** is a past month with existing data in the database. "
+            "Loading from the database is instant — no need to re-run the pipeline."
+        )
+        col_load, col_rerun = st.columns([1, 1])
+        with col_load:
+            load_btn = st.button("⚡  Load from database", type="primary", use_container_width=True)
+        with col_rerun:
+            run_btn = st.button("↺  Re-run full pipeline", use_container_width=True,
+                                help="Overwrites existing data by collecting fresh articles.")
+    else:
+        load_btn = False
+        col_btn, col_skip = st.columns([1, 2])
+        with col_btn:
+            run_btn = st.button("▶  Run Full Pipeline", type="primary", use_container_width=True)
+        with col_skip:
+            no_collect = st.checkbox("Skip collection — reprocess articles already in the database")
+
+    if not _past_with_data and not inc_en and not inc_fr:
         st.warning("Select at least one language in the sidebar before running.")
 
-    if run_btn and (inc_en or inc_fr):
-        langs = (["en"] if inc_en else []) + (["fr"] if inc_fr else [])
+    # ── Fast path: load from DB ───────────────────────────────────────────────
+    if load_btn:
+        with st.spinner(f"Rendering {selected_label} from database…"):
+            rc, out = run_subprocess([sys.executable, "main.py", "draft", "--month", selected_month])
+        if rc == 0:
+            html = load_newsletter_html(selected_month)
+            if html:
+                st.session_state["newsletter_html"] = html
+                st.session_state["newsletter_month"] = selected_month
+                st.success(f"Newsletter for **{selected_label}** loaded from database.")
+                st.download_button(
+                    label="⬇  Download newsletter HTML",
+                    data=html,
+                    file_name=f"seph_newsletter_{selected_month}.html",
+                    mime="text/html",
+                    type="primary",
+                    use_container_width=True,
+                )
+                st.caption("You can also preview it in the **Preview & Download** tab.")
+        else:
+            st.error(out)
+
+    # ── Full pipeline ─────────────────────────────────────────────────────────
+    if run_btn and (_past_with_data or inc_en or inc_fr):
+        langs = (["en"] if inc_en else []) + (["fr"] if inc_fr else []) if not _past_with_data else ["en", "fr"]
+        no_collect_flag = (not _past_with_data) and no_collect
         cmd = [sys.executable, "main.py", "run", "--month", selected_month,
                "--languages", ",".join(langs)]
-        if no_collect:
+        if no_collect_flag:
             cmd.append("--no-collect")
 
         stage_label = st.empty()
