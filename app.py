@@ -11,6 +11,11 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
 
+# Propagate Streamlit Cloud secrets to env vars so subprocesses can read them
+for _key in ["GROQ_API_KEY", "NEWS_API_KEY"]:
+    if _key in st.secrets and not os.environ.get(_key):
+        os.environ[_key] = st.secrets[_key]
+
 st.set_page_config(
     page_title="SEPH Newsletter Generator",
     page_icon="📰",
