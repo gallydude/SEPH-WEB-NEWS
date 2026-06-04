@@ -17,10 +17,26 @@ def _subprocess_env() -> dict:
     try:
         for key in ["GROQ_API_KEY", "NEWS_API_KEY"]:
             if key in st.secrets:
-                env[key] = st.secrets[key]
+                env[key] = str(st.secrets[key])
     except Exception:
         pass
     return env
+
+
+# On Streamlit Cloud there is no .env file — write one from st.secrets so
+# config.py's load_dotenv() picks it up in subprocesses.
+_env_path = os.path.join(BASE_DIR, ".env")
+if not os.path.exists(_env_path):
+    try:
+        lines = []
+        for _key in ["GROQ_API_KEY", "NEWS_API_KEY"]:
+            if _key in st.secrets:
+                lines.append(f'{_key}={st.secrets[_key]}')
+        if lines:
+            with open(_env_path, "w") as _f:
+                _f.write("\n".join(lines) + "\n")
+    except Exception:
+        pass
 
 st.set_page_config(
     page_title="SEPH Newsletter Generator",
