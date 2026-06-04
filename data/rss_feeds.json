@@ -1,0 +1,104 @@
+[
+  {
+    "name": "CBC News - Top Stories",
+    "url": "https://www.cbc.ca/cmlink/rss-topstories",
+    "type": "national",
+    "language": "en"
+  },
+  {
+    "name": "CBC News - Business",
+    "url": "https://www.cbc.ca/cmlink/rss-business",
+    "type": "national",
+    "language": "en"
+  },
+  {
+    "name": "CBC News - Canada",
+    "url": "https://www.cbc.ca/cmlink/rss-canada",
+    "type": "national",
+    "language": "en"
+  },
+  {
+    "name": "Globe and Mail - Business",
+    "url": "https://www.theglobeandmail.com/arc/outboundfeeds/rss/category/business/",
+    "type": "national",
+    "language": "en"
+  },
+  {
+    "name": "Financial Post",
+    "url": "https://financialpost.com/feed",
+    "type": "national",
+    "language": "en"
+  },
+  {
+    "name": "Newswire Canada",
+    "url": "https://www.newswire.ca/rss/news-releases-list.rss",
+    "type": "press_release",
+    "language": "en"
+  },
+  {
+    "name": "CNW Group",
+    "url": "https://www.cnw.ca/rss/news-releases-list.rss",
+    "type": "press_release",
+    "language": "en"
+  },
+  {
+    "name": "ESDC News Releases",
+    "url": "https://www.canada.ca/en/employment-social-development/news/newsroom.atom",
+    "type": "government",
+    "language": "en"
+  },
+  {
+    "name": "Unifor News",
+    "url": "https://www.unifor.org/news/rss.xml",
+    "type": "union",
+    "language": "en"
+  },
+  {
+    "name": "CUPE News",
+    "url": "https://cupe.ca/rss.xml",
+    "type": "union",
+    "language": "en"
+  },
+  {
+    "name": "PSAC News",
+    "url": "https://psacunion.ca/rss.xml",
+    "type": "union",
+    "language": "en"
+  },
+  {
+    "name": "USW Canada News",
+    "url": "https://www.usw.ca/news/rss",
+    "type": "union",
+    "language": "en"
+  },
+  {
+    "name": "Toronto Star - Business",
+    "url": "https://www.thestar.com/business/rss.xml",
+    "type": "regional",
+    "language": "en"
+  },
+  {
+    "name": "Edmonton Journal",
+    "url": "https://edmontonjournal.com/feed",
+    "type": "regional",
+    "language": "en"
+  },
+  {
+    "name": "Calgary Herald",
+    "url": "https://calgaryherald.com/feed",
+    "type": "regional",
+    "language": "en"
+  },
+  {
+    "name": "Vancouver Sun",
+    "url": "https://vancouversun.com/feed",
+    "type": "regional",
+    "language": "en"
+  },
+  {
+    "name": "Montreal Gazette",
+    "url": "https://montrealgazette.com/feed",
+    "type": "regional",
+    "language": "en"
+  }
+]

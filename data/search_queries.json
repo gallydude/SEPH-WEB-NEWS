@@ -1,0 +1,200 @@
+{
+  "base_geography": ["Canada", "Canadian"],
+  "provinces": ["Ontario", "Quebec", "British Columbia", "Alberta", "Saskatchewan", "Manitoba", "Nova Scotia", "New Brunswick", "Newfoundland", "PEI", "Yukon", "Northwest Territories", "Nunavut"],
+
+  "event_types": {
+    "Strike": {
+      "keywords": ["strike", "lockout", "work stoppage", "picket", "collective agreement", "labour dispute", "union dispute", "walkout", "job action"],
+      "description": "Work stoppages and collective bargaining disputes"
+    },
+    "Layoff": {
+      "keywords": ["layoffs", "job cuts", "workforce reduction", "positions eliminated", "job losses", "pink slips", "downsizing", "let go", "workforce cutbacks", "redundancies", "severance"],
+      "description": "Involuntary separations and mass layoffs"
+    },
+    "Closure": {
+      "keywords": ["plant closure", "facility closing", "shutdown", "closing permanently", "shutting down", "store closure", "office closure", "closing operations", "wind down"],
+      "description": "Permanent facility or operation closures"
+    },
+    "Hiring": {
+      "keywords": ["hiring", "new jobs", "job creation", "expanding workforce", "new positions", "recruitment drive", "job fair", "onboarding", "talent acquisition"],
+      "description": "Hiring announcements and job creation"
+    },
+    "Expansion": {
+      "keywords": ["expansion", "new facility", "opening new", "investing in", "new plant", "new location", "capacity expansion", "growing operations"],
+      "description": "Business expansions creating employment"
+    },
+    "Bankruptcy": {
+      "keywords": ["bankruptcy", "insolvency", "creditor protection", "CCAA", "receivership", "liquidation", "filing for bankruptcy", "insolvent"],
+      "description": "Insolvency events affecting employment"
+    },
+    "Restructuring": {
+      "keywords": ["restructuring", "reorganization", "downsizing", "rightsizing", "transformation", "realignment", "workforce transformation", "operational review"],
+      "description": "Corporate restructuring with employment implications"
+    },
+    "Policy": {
+      "keywords": ["government cuts", "spending cuts", "budget cuts", "hiring freeze", "employment program", "labour policy", "minimum wage", "employment regulation"],
+      "description": "Government policy changes affecting employment"
+    },
+    "Contract": {
+      "keywords": ["contract awarded", "major contract", "procurement award", "government contract", "supply agreement", "defence contract"],
+      "description": "Major contracts expected to create or sustain employment"
+    },
+    "Seasonal": {
+      "keywords": ["seasonal hiring", "seasonal layoffs", "seasonal workers", "temporary workers", "seasonal employment", "hiring for summer", "holiday hiring"],
+      "description": "Seasonal employment pattern changes"
+    }
+  },
+
+  "sector_queries": {
+    "11": [
+      "farm workers Canada strike layoffs",
+      "agricultural workers Canada employment",
+      "forestry workers Canada layoffs closure",
+      "fishing industry Canada employment",
+      "temporary foreign workers Canada farm",
+      "seasonal agricultural workers Canada"
+    ],
+    "21": [
+      "oil sands layoffs Alberta",
+      "mining layoffs Canada strike",
+      "oil and gas workers Canada employment",
+      "mining expansion hiring Canada",
+      "oil patch jobs Alberta Saskatchewan",
+      "natural gas workers Canada layoffs",
+      "potash mine Saskatchewan employment"
+    ],
+    "22": [
+      "hydro utility workers Canada strike",
+      "Hydro Quebec workers strike",
+      "BC Hydro Ontario Power Generation employment",
+      "utility workers Canada layoffs",
+      "power plant workers Canada"
+    ],
+    "23": [
+      "construction workers Canada layoffs",
+      "building trades Canada strike",
+      "construction jobs Canada hiring",
+      "construction company layoffs Canada",
+      "infrastructure project jobs Canada"
+    ],
+    "31-33": [
+      "plant closure Canada manufacturing layoffs",
+      "factory shutdown Canada workers",
+      "auto plant Canada layoffs strike",
+      "manufacturing jobs Canada expansion",
+      "food processing plant Canada workers",
+      "steel mill Canada layoffs",
+      "pharmaceutical plant Canada employment"
+    ],
+    "41": [
+      "wholesale distribution layoffs Canada",
+      "distributor Canada jobs employment",
+      "wholesale trade Canada workers"
+    ],
+    "44-45": [
+      "retail store closure Canada layoffs",
+      "retail chain Canada job cuts",
+      "store closing Canada workers",
+      "retail expansion Canada hiring",
+      "supermarket Canada workers strike",
+      "department store Canada closure"
+    ],
+    "48-49": [
+      "truckers Canada strike layoffs",
+      "rail workers Canada strike",
+      "CN Rail CP Rail workers employment",
+      "airline workers Canada layoffs",
+      "Canada Post workers strike",
+      "port workers Canada strike lockout",
+      "transit workers Canada strike"
+    ],
+    "51": [
+      "tech layoffs Canada workers",
+      "media layoffs Canada jobs",
+      "CBC CTV Postmedia workers employment",
+      "telecom Canada layoffs restructuring",
+      "technology company Canada job cuts",
+      "video game studio Canada layoffs"
+    ],
+    "52": [
+      "bank layoffs Canada workers",
+      "insurance company Canada job cuts",
+      "financial services Canada employment",
+      "RBC TD Scotiabank layoffs",
+      "credit union Canada workers"
+    ],
+    "53": [
+      "real estate company Canada layoffs",
+      "property management Canada workers",
+      "REIT Canada employment"
+    ],
+    "54": [
+      "consulting firm Canada layoffs",
+      "professional services Canada employment",
+      "government contract Canada jobs",
+      "engineering firm Canada workers",
+      "law firm Canada employment"
+    ],
+    "56": [
+      "staffing agency Canada layoffs",
+      "temp workers Canada employment",
+      "call centre Canada closure layoffs",
+      "security company Canada workers",
+      "waste management Canada workers"
+    ],
+    "61": [
+      "teachers Canada strike",
+      "university workers Canada strike",
+      "school board Canada layoffs",
+      "teaching assistants Canada strike",
+      "college faculty Canada strike",
+      "education workers Canada employment",
+      "daycare workers Canada strike"
+    ],
+    "62": [
+      "hospital workers Canada strike",
+      "nurses Canada strike layoffs",
+      "long-term care Canada workers",
+      "health care workers Canada employment",
+      "home care Canada workers",
+      "PSW Canada employment strike",
+      "health authority Canada layoffs"
+    ],
+    "71": [
+      "casino workers Canada strike",
+      "entertainment workers Canada layoffs",
+      "arts workers Canada employment",
+      "sports arena Canada workers",
+      "IATSE Canada strike"
+    ],
+    "72": [
+      "restaurant workers Canada layoffs",
+      "hotel workers Canada strike",
+      "hospitality workers Canada employment",
+      "food service Canada layoffs",
+      "hotel closure Canada workers"
+    ],
+    "81": [
+      "non-profit workers Canada layoffs",
+      "personal services Canada employment",
+      "community organization Canada workers"
+    ],
+    "91": [
+      "federal government job cuts Canada",
+      "public service Canada layoffs",
+      "PSAC strike Canada",
+      "government workers Canada employment",
+      "civil service Canada hiring",
+      "government hiring freeze Canada",
+      "provincial government layoffs Canada",
+      "municipal workers Canada strike"
+    ]
+  },
+
+  "combined_templates": [
+    "{sector_keyword} {province} {event_type}",
+    "{sector_keyword} Canada {event_type} workers",
+    "{event_type} {province} {sector_keyword} jobs",
+    "Canada {sector_keyword} employment {event_type}"
+  ]
+}

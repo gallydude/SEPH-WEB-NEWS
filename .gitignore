@@ -1,0 +1,11 @@
+.env
+*.db
+*.db-shm
+*.db-wal
+*.xlsx
+newsletter_*.html
+newsletter_*.txt
+newsletter_*.eml
+__pycache__/
+*.pyc
+.streamlit/secrets.toml

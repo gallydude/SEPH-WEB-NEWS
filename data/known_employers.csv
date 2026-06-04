@@ -1,0 +1,97 @@
+employer_name,naics_code,naics_sector,province,employer_type,notes
+Canada Post,48-49,Transportation and warehousing,National,Crown corporation,Postal service
+CBC/Radio-Canada,51,Information and cultural industries,National,Crown corporation,Public broadcaster
+VIA Rail,48-49,Transportation and warehousing,National,Crown corporation,Passenger rail
+CN Rail,48-49,Transportation and warehousing,National,Private,Freight rail
+CP Rail,48-49,Transportation and warehousing,National,Private,Freight rail
+Air Canada,48-49,Transportation and warehousing,National,Private,Airline
+WestJet,48-49,Transportation and warehousing,National,Private,Airline
+Hydro Quebec,22,Utilities,Quebec,Crown corporation,Electricity utility
+BC Hydro,22,Utilities,British Columbia,Crown corporation,Electricity utility
+Hydro One,22,Utilities,Ontario,Crown corporation,Electricity distribution
+Ontario Power Generation,22,Utilities,Ontario,Crown corporation,Electricity generation
+SaskPower,22,Utilities,Saskatchewan,Crown corporation,Electricity utility
+Manitoba Hydro,22,Utilities,Manitoba,Crown corporation,Electricity utility
+NB Power,22,Utilities,New Brunswick,Crown corporation,Electricity utility
+Nova Scotia Power,22,Utilities,Nova Scotia,Private,Electricity utility
+Enbridge Gas,22,Utilities,Ontario,Private,Natural gas distribution
+FortisBC,22,Utilities,British Columbia,Private,Natural gas distribution
+RBC,52,Finance and insurance,National,Private,Bank
+TD Bank,52,Finance and insurance,National,Private,Bank
+Scotiabank,52,Finance and insurance,National,Private,Bank
+BMO,52,Finance and insurance,National,Private,Bank
+CIBC,52,Finance and insurance,National,Private,Bank
+National Bank,52,Finance and insurance,Quebec,Private,Bank
+Desjardins,52,Finance and insurance,Quebec,Private,Credit union/insurer
+Manulife,52,Finance and insurance,National,Private,Insurance
+Sun Life,52,Finance and insurance,National,Private,Insurance
+Intact Insurance,52,Finance and insurance,National,Private,Insurance
+Loblaw,44-45,Retail trade,National,Private,Grocery/pharmacy
+Sobeys,44-45,Retail trade,National,Private,Grocery
+Metro,44-45,Retail trade,Quebec/Ontario,Private,Grocery
+Empire Company,44-45,Retail trade,National,Private,Grocery (parent of Sobeys)
+Walmart Canada,44-45,Retail trade,National,Private,Department store
+Canadian Tire,44-45,Retail trade,National,Private,General merchandise
+Dollarama,44-45,Retail trade,National,Private,Dollar store
+Best Buy Canada,44-45,Retail trade,National,Private,Electronics
+Hudson's Bay,44-45,Retail trade,National,Private,Department store
+Reitmans,44-45,Retail trade,National,Private,Clothing
+Unifor,UNION,Multiple sectors,National,Union,Represents auto workers media workers etc
+CUPE,UNION,Multiple sectors,National,Union,Public sector union
+PSAC,UNION,91,National,Union,Federal public service union
+Teamsters Canada,UNION,48-49,National,Union,Transportation workers
+USW,UNION,21 31-33,National,Union,Steelworkers
+UFCW,UNION,44-45 31-33,National,Union,Food and commercial workers
+Stelco,31-33,Manufacturing,Ontario,Private,Steel
+ArcelorMittal Dofasco,31-33,Manufacturing,Ontario,Private,Steel
+Maple Leaf Foods,31-33,Manufacturing,National,Private,Food processing
+McCain Foods,31-33,Manufacturing,National,Private,Food processing
+Cargill Canada,31-33,Manufacturing,National,Private,Meat processing
+JBS Canada,31-33,Manufacturing,National,Private,Meat processing
+General Motors Canada,31-33,Manufacturing,Ontario,Private,Auto manufacturing
+Ford Canada,31-33,Manufacturing,Ontario,Private,Auto manufacturing
+Stellantis Canada,31-33,Manufacturing,Ontario,Private,Auto manufacturing (Chrysler)
+Toyota Canada,31-33,Manufacturing,Ontario,Private,Auto manufacturing
+Honda Canada,31-33,Manufacturing,Ontario,Private,Auto manufacturing
+Magna International,31-33,Manufacturing,Ontario,Private,Auto parts
+Linamar,31-33,Manufacturing,Ontario,Private,Auto parts
+Martinrea,31-33,Manufacturing,Ontario,Private,Auto parts
+Bombardier,31-33,Manufacturing,Quebec,Private,Aerospace
+Pratt and Whitney Canada,31-33,Manufacturing,Quebec,Private,Aerospace
+Bell Helicopter,31-33,Manufacturing,Quebec,Private,Aerospace
+AstraZeneca Canada,31-33,Manufacturing,Ontario,Private,Pharmaceutical
+Pfizer Canada,31-33,Manufacturing,National,Private,Pharmaceutical
+Johnson and Johnson Canada,31-33,Manufacturing,National,Private,Pharmaceutical
+Postmedia,51,Information and cultural industries,National,Private,Media
+Bell Media,51,Information and cultural industries,National,Private,Media/telecom
+Rogers Communications,51,Information and cultural industries,National,Private,Telecom/media
+BCE,51,Information and cultural industries,National,Private,Telecom
+Telus,51,Information and cultural industries,National,Private,Telecom
+Shaw Communications,51,Information and cultural industries,National,Private,Telecom
+Cogeco,51,Information and cultural industries,Quebec/Ontario,Private,Telecom/media
+Ubisoft Montreal,51,Information and cultural industries,Quebec,Private,Video games
+Electronic Arts Canada,51,Information and cultural industries,British Columbia,Private,Video games
+Amazon Canada,44-45,Retail trade,National,Private,Online retail (retail ops)
+Amazon Canada Fulfillment,48-49,Transportation and warehousing,National,Private,Warehouse/logistics ops
+Purolator,48-49,Transportation and warehousing,National,Crown/private,Courier
+FedEx Canada,48-49,Transportation and warehousing,National,Private,Courier
+UPS Canada,48-49,Transportation and warehousing,National,Private,Courier
+GardaWorld,56,Administrative and support waste management and remediation services,National,Private,Security services
+Aramark Canada,56,Administrative and support waste management and remediation services,National,Private,Facility services
+GFL Environmental,56,Administrative and support waste management and remediation services,National,Private,Waste management
+Deloitte Canada,54,Professional scientific and technical services,National,Private,Consulting
+KPMG Canada,54,Professional scientific and technical services,National,Private,Accounting/consulting
+PwC Canada,54,Professional scientific and technical services,National,Private,Accounting/consulting
+EY Canada,54,Professional scientific and technical services,National,Private,Accounting/consulting
+WSP Global,54,Professional scientific and technical services,National,Private,Engineering
+SNC-Lavalin/AtkinsRealis,54,Professional scientific and technical services,National,Private,Engineering
+Stantec,54,Professional scientific and technical services,National,Private,Engineering
+ATCO,22,Utilities,Alberta,Private,Utilities/energy
+Suncor,21,Mining quarrying and oil and gas extraction,Alberta,Private,Oil sands
+Canadian Natural Resources,21,Mining quarrying and oil and gas extraction,Alberta,Private,Oil and gas
+Cenovus,21,Mining quarrying and oil and gas extraction,Alberta,Private,Oil and gas
+Imperial Oil,21,Mining quarrying and oil and gas extraction,Alberta,Private,Oil sands
+Teck Resources,21,Mining quarrying and oil and gas extraction,British Columbia,Private,Mining
+Barrick Gold,21,Mining quarrying and oil and gas extraction,National,Private,Mining
+Agnico Eagle,21,Mining quarrying and oil and gas extraction,National,Private,Mining
+Nutrien,21,Mining quarrying and oil and gas extraction,Saskatchewan,Private,Potash/fertilizer

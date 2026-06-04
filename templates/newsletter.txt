@@ -1,0 +1,71 @@
+{% set bar = '━' * 64 %}
+{{ bar }}
+SEPH LABOUR MARKET INTELLIGENCE NEWSLETTER
+Reference Month: {{ reference_month }}
+Issued: {{ issued_date }}
+{{ bar }}
+
+EXECUTIVE SUMMARY
+─────────────────
+{{ executive_summary }}
+
+{% if key_events %}
+KEY EVENTS AT A GLANCE
+───────────────────────
+{% for e in key_events %}
+• NAICS {{ e.naics_code }} — {{ e.event_type }}: {{ e.headline[:90] }}{{ e.workers_str }} [{{ e.impact_direction }}]
+{% endfor %}
+{% endif %}
+
+{{ bar }}
+SECTOR-BY-SECTOR NEWS
+{{ bar }}
+{% for sector in sectors %}
+
+[NAICS {{ sector.code }} — {{ sector.name }}]
+{{ '─' * (12 + sector.code|length + sector.name|length) }}
+{% for a in sector.articles %}
+Headline    : {{ a.headline }}
+Source      : {{ a.source_name }} | Published: {{ a.published_date }}
+Province    : {{ a.province }}
+Event type  : {{ a.event_type }}
+Employer    : {{ a.employer }}
+Summary     : {{ a.summary }}
+Workers     : {% if a.workers_affected %}{{ '{:,}'.format(a.workers_affected) }}{% else %}Not reported{% endif %}
+
+Impact      : {{ a.impact_direction }}
+Relevance   : {{ a.relevance_score }}/5 — {{ a.relevance_justification }}
+Link        : {{ a.url if a.url else '[No link available]' }}
+{% if a.analyst_notes %}Analyst note: {{ a.analyst_notes }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% if empty_sectors %}
+{{ bar }}
+SECTORS WITH NO NOTABLE EVENTS THIS MONTH
+{{ bar }}
+{% for s in empty_sectors %}
+• NAICS {{ s.code }} — {{ s.name }}
+{% endfor %}
+
+Note: No qualifying articles were found for these sectors. This does not
+indicate the absence of employment changes — only the absence of news-covered
+events above the minimum relevance threshold.
+{% endif %}
+
+{{ bar }}
+ANALYST REVIEW CHECKLIST
+{{ bar }}
+□ Cross-reference articles with relevance score 4-5 against SEPH preliminary estimates
+□ Verify sector classification for multi-industry employers
+□ Confirm province-level alignment with SEPH geographic breakdowns
+□ Flag articles whose event dates fall across month boundaries
+□ Note events that may affect administrative data receipt timing
+□ Resolve any UNCLEAR NAICS classifications before archiving
+□ Add analyst notes to source tracking table
+
+{{ bar }}
+Total articles included: {{ total_articles }}
+This newsletter was generated automatically. Verify all claims before use in official communications.
+{{ bar }}

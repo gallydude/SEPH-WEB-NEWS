@@ -1,0 +1,363 @@
+import streamlit as st
+import subprocess
+import sys
+import os
+import re
+import time as _t
+from datetime import date
+from dateutil.relativedelta import relativedelta
+import pandas as pd
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, BASE_DIR)
+
+st.set_page_config(
+    page_title="SEPH Newsletter Generator",
+    page_icon="📰",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+st.markdown("""
+<style>
+[data-testid="stSidebar"] { min-width: 270px; max-width: 270px; }
+div[data-testid="metric-container"] {
+    background: #f0f5fa; padding: 12px 16px;
+    border-radius: 8px; border-left: 4px solid #1a3a5c;
+}
+.stTabs [data-baseweb="tab"] { font-size: 14px; padding: 8px 20px; }
+</style>
+""", unsafe_allow_html=True)
+
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def get_month_options(n: int = 36) -> list[tuple[str, str]]:
+    options = []
+    d = date.today().replace(day=1)
+    for _ in range(n):
+        options.append((d.strftime("%B %Y"), d.strftime("%Y-%m")))
+        d -= relativedelta(months=1)
+    return options
+
+
+def load_articles(month: str) -> pd.DataFrame:
+    from src.database import init_db, _connect
+    init_db()
+    with _connect() as conn:
+        rows = conn.execute(
+            "SELECT * FROM articles WHERE reference_month = ? ORDER BY relevance_score DESC, naics_code",
+            (month,),
+        ).fetchall()
+    if not rows:
+        return pd.DataFrame()
+    return pd.DataFrame([dict(r) for r in rows])
+
+
+def load_newsletter_html(month: str) -> str:
+    path = os.path.join(BASE_DIR, f"newsletter_{month.replace('-', '_')}.html")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            return f.read()
+    return ""
+
+
+def run_subprocess(cmd: list[str]) -> tuple[int, str]:
+    result = subprocess.run(
+        cmd, capture_output=True, text=True,
+        encoding="utf-8", errors="replace", cwd=BASE_DIR,
+    )
+    return result.returncode, result.stdout + result.stderr
+
+
+# ── Sidebar ───────────────────────────────────────────────────────────────────
+
+with st.sidebar:
+    st.markdown("## 📰 SEPH Newsletter")
+    st.caption("Labour Market Intelligence Generator")
+    st.divider()
+
+    st.markdown("**Reference Month**")
+    month_options = get_month_options(36)
+    month_labels = [o[0] for o in month_options]
+    month_values = [o[1] for o in month_options]
+    idx = st.selectbox(
+        "Month", range(len(month_labels)),
+        format_func=lambda i: month_labels[i],
+        label_visibility="collapsed",
+    )
+    selected_month = month_values[idx]
+    selected_label = month_labels[idx]
+
+    st.markdown("**Languages**")
+    col_en, col_fr = st.columns(2)
+    with col_en:
+        inc_en = st.checkbox("🇨🇦 English", value=True)
+    with col_fr:
+        inc_fr = st.checkbox("🇫🇷 French", value=True)
+
+    st.divider()
+    st.caption("Model: llama-3.1-8b-instant · Groq")
+    st.caption("Source: Google News RSS + NewsAPI")
+
+
+# ── Page header ───────────────────────────────────────────────────────────────
+
+st.markdown("# SEPH Labour Market Intelligence")
+st.markdown(f"Reference month: **{selected_label}**")
+
+tab_run, tab_articles, tab_preview = st.tabs([
+    "▶  Run Pipeline", "📊  Articles", "📄  Preview & Download",
+])
+
+
+# ── Tab 1: Run Pipeline ───────────────────────────────────────────────────────
+
+with tab_run:
+    st.markdown("### Generate Newsletter")
+
+    col_btn, col_skip = st.columns([1, 2])
+    with col_btn:
+        run_btn = st.button(
+            "▶  Run Full Pipeline", type="primary", use_container_width=True,
+        )
+    with col_skip:
+        no_collect = st.checkbox(
+            "Skip collection — reprocess articles already in the database",
+        )
+
+    if not inc_en and not inc_fr:
+        st.warning("Select at least one language in the sidebar before running.")
+
+    if run_btn and (inc_en or inc_fr):
+        langs = (["en"] if inc_en else []) + (["fr"] if inc_fr else [])
+        cmd = [sys.executable, "main.py", "run", "--month", selected_month,
+               "--languages", ",".join(langs)]
+        if no_collect:
+            cmd.append("--no-collect")
+
+        stage_label = st.empty()
+        progress_bar = st.progress(0)
+        elapsed_label = st.empty()
+        log_box = st.expander("Pipeline log", expanded=True)
+
+        stage_label.markdown("**Stage 1 / 3** — Collecting news articles…")
+
+        total_articles = 0
+        current_article = 0
+        processing_start = None
+        pipeline_start = _t.monotonic()
+        success = False
+
+        proc = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, encoding="utf-8", errors="replace",
+            cwd=BASE_DIR,
+        )
+
+        for raw_line in proc.stdout:
+            line = raw_line.rstrip()
+            if not line:
+                continue
+
+            elapsed_total = _t.monotonic() - pipeline_start
+            elapsed_label.caption(f"Elapsed: {int(elapsed_total // 60)}m {int(elapsed_total % 60)}s")
+
+            with log_box:
+                st.text(line)
+
+            if "Collecting news for" in line:
+                stage_label.markdown("**Stage 1 / 3** — Collecting news articles…")
+                progress_bar.progress(0.05)
+
+            elif "Total after deduplication" in line:
+                m = re.search(r"(\d+) articles", line)
+                n = m.group(1) if m else "?"
+                stage_label.markdown(f"**Stage 1 / 3 complete** — {n} articles collected")
+                progress_bar.progress(0.18)
+
+            elif "Processing" in line and "articles with Groq" in line:
+                m = re.search(r"Processing (\d+) articles", line)
+                if m:
+                    total_articles = int(m.group(1))
+                processing_start = _t.monotonic()
+                stage_label.markdown(
+                    f"**Stage 2 / 3** — Classifying {total_articles} articles with AI…"
+                )
+                progress_bar.progress(0.20)
+
+            elif total_articles > 0 and re.match(r"\s+\[\d+/\d+\]", line):
+                m = re.search(r"\[(\d+)/(\d+)\]", line)
+                if m:
+                    current_article = int(m.group(1))
+                    pct = 0.20 + (current_article / total_articles) * 0.65
+                    progress_bar.progress(min(pct, 0.85))
+
+                    eta_str = ""
+                    if processing_start and current_article > 1:
+                        elapsed = _t.monotonic() - processing_start
+                        if elapsed > 0:
+                            rate = current_article / elapsed
+                            remaining = (total_articles - current_article) / rate
+                            eta_str = f" — ~{int(remaining // 60)}m {int(remaining % 60)}s left"
+
+                    stage_label.markdown(
+                        f"**Stage 2 / 3** — Classifying articles with AI "
+                        f"({current_article} / {total_articles}){eta_str}"
+                    )
+
+            elif "processor] Done" in line:
+                m = re.search(r"(\d+)/(\d+) articles marked", line)
+                if m:
+                    inc, tot = m.group(1), m.group(2)
+                    stage_label.markdown(
+                        f"**Stage 2 / 3 complete** — {inc} of {tot} articles selected for newsletter"
+                    )
+                progress_bar.progress(0.88)
+
+            elif "Building newsletter" in line:
+                stage_label.markdown("**Stage 3 / 3** — Building newsletter…")
+                progress_bar.progress(0.93)
+
+            elif "Pipeline complete" in line:
+                progress_bar.progress(1.0)
+                elapsed_label.caption(f"Completed in {int(elapsed_total // 60)}m {int(elapsed_total % 60)}s")
+                stage_label.markdown(f"**Done** — newsletter ready for {selected_label}")
+                success = True
+
+        proc.wait()
+
+        if proc.returncode == 0 and success:
+            html = load_newsletter_html(selected_month)
+            if html:
+                st.success(f"Newsletter for **{selected_label}** is ready.")
+                st.download_button(
+                    label="⬇  Download newsletter HTML",
+                    data=html,
+                    file_name=f"seph_newsletter_{selected_month}.html",
+                    mime="text/html",
+                    type="primary",
+                    use_container_width=True,
+                )
+                st.caption("You can also preview it in the **Preview & Download** tab.")
+        else:
+            progress_bar.progress(1.0)
+            stage_label.markdown("**Pipeline encountered an error** — see the log above.")
+            st.error("Something went wrong. Check the pipeline log.")
+
+
+# ── Tab 2: Articles ───────────────────────────────────────────────────────────
+
+with tab_articles:
+    df = load_articles(selected_month)
+
+    if df.empty:
+        st.info(f"No articles for {selected_label} yet. Run the pipeline first.")
+    else:
+        total = len(df)
+        included = int(df.get("included_in_newsletter", pd.Series([0])).sum())
+        active_sectors = (
+            df[df["included_in_newsletter"] == 1]["naics_code"].nunique()
+            if included else 0
+        )
+        scores = df["relevance_score"].dropna()
+
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Collected", total)
+        c2.metric("In newsletter", included)
+        c3.metric("Active sectors", active_sectors)
+        c4.metric("Avg score", f"{scores.mean():.1f}" if not scores.empty else "—")
+
+        st.divider()
+
+        with st.expander("Filters", expanded=True):
+            fc1, fc2, fc3, fc4, fc5 = st.columns(5)
+            with fc1:
+                show_excluded = st.checkbox("Show excluded articles", value=False)
+            with fc2:
+                min_score = st.slider("Min score", 1, 5, 2)
+            with fc3:
+                naics_opts = ["All"] + sorted(df["naics_code"].dropna().unique().tolist())
+                sel_naics = st.selectbox("NAICS", naics_opts)
+            with fc4:
+                impact_opts = ["All"] + sorted(df["impact_direction"].dropna().unique().tolist())
+                sel_impact = st.selectbox("Impact", impact_opts)
+            with fc5:
+                if "language" in df.columns:
+                    lang_opts = ["All"] + sorted(df["language"].dropna().unique().tolist())
+                    sel_lang = st.selectbox("Language", lang_opts)
+                else:
+                    sel_lang = "All"
+
+        view = df.copy()
+        if not show_excluded:
+            view = view[view["included_in_newsletter"] == 1]
+        view = view[view["relevance_score"] >= min_score]
+        if sel_naics != "All":
+            view = view[view["naics_code"] == sel_naics]
+        if sel_impact != "All":
+            view = view[view["impact_direction"] == sel_impact]
+        if sel_lang != "All" and "language" in view.columns:
+            view = view[view["language"] == sel_lang]
+
+        wanted = [
+            "relevance_score", "naics_code", "naics_sector", "province",
+            "event_type", "employer", "headline", "impact_direction",
+            "workers_affected", "source_name", "published_date",
+        ]
+        if "language" in view.columns:
+            wanted.insert(1, "language")
+
+        display = view[[c for c in wanted if c in view.columns]].rename(columns={
+            "relevance_score": "Score", "naics_code": "NAICS",
+            "naics_sector": "Sector", "province": "Province",
+            "event_type": "Event", "impact_direction": "Impact",
+            "workers_affected": "Workers", "source_name": "Source",
+            "published_date": "Date", "language": "Lang",
+        })
+
+        st.dataframe(display, use_container_width=True, hide_index=True, height=520)
+        st.caption(f"Showing {len(view)} of {total} articles")
+
+
+# ── Tab 3: Preview & Download ─────────────────────────────────────────────────
+
+with tab_preview:
+    html = load_newsletter_html(selected_month)
+
+    if not html:
+        st.info(f"No newsletter rendered yet for {selected_label}. Run the pipeline first.")
+    else:
+        col_a, col_b, col_c = st.columns([2, 2, 2])
+
+        with col_a:
+            st.download_button(
+                label="⬇  Download newsletter HTML",
+                data=html,
+                file_name=f"seph_newsletter_{selected_month}.html",
+                mime="text/html",
+                type="primary",
+                use_container_width=True,
+            )
+
+        with col_b:
+            if st.button("Re-render from database", use_container_width=True):
+                rc, out = run_subprocess([sys.executable, "main.py", "draft", "--month", selected_month])
+                if rc == 0:
+                    st.success("Re-rendered — refresh the page to see updates.")
+                else:
+                    st.error(out)
+
+        with col_c:
+            if st.button("Export to Excel", use_container_width=True):
+                rc, out = run_subprocess([sys.executable, "main.py", "export", "--month", selected_month])
+                if rc == 0:
+                    xlsx = os.path.join(BASE_DIR, f"seph_source_tracking_{selected_month.replace('-','_')}.xlsx")
+                    st.success(f"Saved: {os.path.basename(xlsx)}")
+                else:
+                    st.error(out)
+
+        st.divider()
+        st.markdown(f"**{selected_label}** — rendered newsletter")
+        st.components.v1.html(html, height=950, scrolling=True)

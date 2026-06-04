@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEPH Labour Market Intelligence — {{ reference_month }}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f4f4;font-family:Arial,Helvetica,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;">
+<tr><td align="center" style="padding:20px 10px;">
+
+  <!-- Outer wrapper -->
+  <table width="680" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border:1px solid #ddd;">
+
+    <!-- Header -->
+    <tr>
+      <td style="background-color:#1a3a5c;padding:28px 32px;">
+        <p style="margin:0;color:#a8c8e8;font-size:11px;letter-spacing:2px;text-transform:uppercase;">Statistics Canada — Internal Use</p>
+        <h1 style="margin:8px 0 4px;color:#ffffff;font-size:22px;font-weight:bold;">SEPH Labour Market Intelligence</h1>
+        <p style="margin:0;color:#a8c8e8;font-size:14px;">Reference Month: <strong style="color:#ffffff;">{{ reference_month }}</strong> &nbsp;|&nbsp; Issued: {{ issued_date }}</p>
+      </td>
+    </tr>
+
+    <!-- Executive Summary -->
+    <tr>
+      <td style="padding:24px 32px;border-bottom:3px solid #1a3a5c;">
+        <h2 style="margin:0 0 12px;color:#1a3a5c;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Executive Summary</h2>
+        <p style="margin:0;color:#333;font-size:14px;line-height:1.7;">{{ executive_summary }}</p>
+      </td>
+    </tr>
+
+    <!-- Key Events at a Glance -->
+    {% if key_events %}
+    <tr>
+      <td style="padding:20px 32px;background-color:#f0f5fa;border-bottom:1px solid #ddd;">
+        <h2 style="margin:0 0 14px;color:#1a3a5c;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Key Events at a Glance</h2>
+        <table width="100%" cellpadding="0" cellspacing="0">
+          {% for e in key_events %}
+          <tr>
+            <td style="padding:5px 0;vertical-align:top;">
+              <span style="display:inline-block;background-color:#1a3a5c;color:#fff;font-size:10px;padding:2px 6px;border-radius:3px;margin-right:8px;white-space:nowrap;">NAICS {{ e.naics_code }}</span>
+              <span style="color:#555;font-size:11px;font-weight:bold;">{{ e.event_type }}</span>
+              <span style="color:#333;font-size:13px;"> — {{ e.headline[:100] }}{{ e.workers_str }}</span>
+              <span style="font-size:11px;color:{% if e.impact_direction == 'Positive' %}#1a7a3c{% elif e.impact_direction == 'Negative' %}#c0392b{% elif e.impact_direction == 'Mixed' %}#d35400{% else %}#777{% endif %};margin-left:6px;">[{{ e.impact_direction }}]</span>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </td>
+    </tr>
+    {% endif %}
+
+    <!-- Sector divider -->
+    <tr>
+      <td style="background-color:#1a3a5c;padding:10px 32px;">
+        <p style="margin:0;color:#ffffff;font-size:13px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;">Sector-by-Sector News</p>
+      </td>
+    </tr>
+
+    <!-- Sectors -->
+    {% for sector in sectors %}
+    <tr>
+      <td style="padding:0 32px 0;">
+
+        <!-- Sector header -->
+        <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:2px solid #1a3a5c;margin-top:24px;">
+          <tr>
+            <td style="padding-bottom:6px;">
+              <span style="background-color:#1a3a5c;color:#fff;font-size:11px;font-weight:bold;padding:3px 8px;border-radius:3px;">NAICS {{ sector.code }}</span>
+              <span style="color:#1a3a5c;font-size:15px;font-weight:bold;margin-left:8px;">{{ sector.name }}</span>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Articles in this sector -->
+        {% for a in sector.articles %}
+        <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e0e0e0;border-radius:4px;margin:14px 0;border-left:4px solid {% if a.relevance_score >= 4 %}#c0392b{% elif a.relevance_score == 3 %}#d35400{% else %}#888{% endif %};">
+          <tr>
+            <td style="padding:14px 16px;">
+
+              <!-- Headline -->
+              <p style="margin:0 0 8px;font-size:14px;font-weight:bold;color:#1a1a1a;">{{ a.headline }}</p>
+
+              <!-- Metadata row -->
+              <p style="margin:0 0 10px;font-size:11px;color:#777;">
+                {{ a.source_name }}{% if a.published_date %} &middot; {{ a.published_date }}{% endif %}
+                {% if a.province and a.province != 'Not specified' %} &middot; {{ a.province }}{% endif %}
+                &middot; <strong>{{ a.event_type }}</strong>
+                {% if a.employer and a.employer != 'Not specified' %} &middot; {{ a.employer }}{% endif %}
+              </p>
+
+              <!-- Summary -->
+              {% if a.summary %}
+              <p style="margin:0 0 10px;font-size:13px;color:#333;line-height:1.6;">{{ a.summary }}</p>
+              {% endif %}
+
+              <!-- Impact tags row -->
+              <table cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+                <tr>
+                  <td style="padding-right:8px;">
+                    <span style="display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:bold;
+                      background-color:{% if a.impact_direction == 'Positive' %}#d4edda{% elif a.impact_direction == 'Negative' %}#f8d7da{% elif a.impact_direction == 'Mixed' %}#fff3cd{% else %}#e2e3e5{% endif %};
+                      color:{% if a.impact_direction == 'Positive' %}#155724{% elif a.impact_direction == 'Negative' %}#721c24{% elif a.impact_direction == 'Mixed' %}#856404{% else %}#383d41{% endif %};">
+                      {{ a.impact_direction }}
+                    </span>
+                  </td>
+                  <td style="padding-right:8px;">
+                    <span style="display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:bold;
+                      background-color:{% if a.relevance_score >= 4 %}#f8d7da{% elif a.relevance_score == 3 %}#fff3cd{% else %}#e2e3e5{% endif %};
+                      color:{% if a.relevance_score >= 4 %}#721c24{% elif a.relevance_score == 3 %}#856404{% else %}#383d41{% endif %};">
+                      Relevance: {{ a.relevance_score }}/5
+                    </span>
+                  </td>
+                  {% if a.workers_affected %}
+                  <td>
+                    <span style="display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;background-color:#e8eaf6;color:#1a237e;">
+                      {{ '{:,}'.format(a.workers_affected) }} workers
+                    </span>
+                  </td>
+                  {% endif %}
+                </tr>
+              </table>
+
+              <!-- Justification + link -->
+              <p style="margin:0 0 4px;font-size:11px;color:#888;font-style:italic;">{{ a.relevance_justification }}</p>
+              {% if a.url %}
+              <p style="margin:0;font-size:11px;"><a href="{{ a.url }}" style="color:#1a3a5c;">Read article &rarr;</a></p>
+              {% endif %}
+
+              <!-- Analyst notes -->
+              {% if a.analyst_notes %}
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;background-color:#fffde7;border-left:3px solid #f9a825;border-radius:2px;">
+                <tr>
+                  <td style="padding:8px 10px;font-size:11px;color:#5d4037;">
+                    <strong>Analyst note:</strong> {{ a.analyst_notes }}
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+            </td>
+          </tr>
+        </table>
+        {% endfor %}
+
+      </td>
+    </tr>
+    {% endfor %}
+
+    <!-- Empty sectors -->
+    {% if empty_sectors %}
+    <tr>
+      <td style="background-color:#1a3a5c;padding:10px 32px;margin-top:24px;">
+        <p style="margin:0;color:#ffffff;font-size:13px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;">Sectors with No Notable Events</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:16px 32px;border-bottom:1px solid #ddd;">
+        <p style="margin:0 0 10px;font-size:12px;color:#555;font-style:italic;">No qualifying articles were found for these sectors. This does not indicate the absence of employment changes.</p>
+        <table width="100%" cellpadding="0" cellspacing="0">
+          {% for s in empty_sectors %}
+          <tr>
+            <td style="padding:2px 0;font-size:12px;color:#777;">
+              <span style="background-color:#eee;color:#555;font-size:10px;padding:1px 5px;border-radius:2px;margin-right:6px;">NAICS {{ s.code }}</span>{{ s.name }}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </td>
+    </tr>
+    {% endif %}
+
+    <!-- Checklist -->
+    <tr>
+      <td style="padding:20px 32px;background-color:#f9f9f9;border-top:1px solid #ddd;">
+        <h2 style="margin:0 0 12px;color:#1a3a5c;font-size:13px;text-transform:uppercase;letter-spacing:1px;">Analyst Review Checklist</h2>
+        <table cellpadding="0" cellspacing="0">
+          {% for item in [
+            'Cross-reference articles with relevance score 4–5 against SEPH preliminary estimates',
+            'Verify sector classification for multi-industry employers',
+            'Confirm province-level alignment with SEPH geographic breakdowns',
+            'Flag articles whose event dates fall across month boundaries',
+            'Note events that may affect administrative data receipt timing',
+            'Resolve any UNCLEAR NAICS classifications before archiving',
+            'Add analyst notes to source tracking table'
+          ] %}
+          <tr>
+            <td style="padding:3px 0;font-size:12px;color:#444;">
+              <span style="margin-right:8px;color:#1a3a5c;">&#9744;</span>{{ item }}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </td>
+    </tr>
+
+    <!-- Footer -->
+    <tr>
+      <td style="background-color:#1a3a5c;padding:16px 32px;">
+        <p style="margin:0;color:#a8c8e8;font-size:11px;">
+          Total articles included: {{ total_articles }} &nbsp;|&nbsp;
+          This newsletter was generated automatically. Verify all claims before use in official communications.
+        </p>
+      </td>
+    </tr>
+
+  </table>
+</td></tr>
+</table>
+
+</body>
+</html>

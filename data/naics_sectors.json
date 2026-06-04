@@ -1,0 +1,245 @@
+[
+  {
+    "code": "11",
+    "name": "Agriculture, forestry, fishing and hunting",
+    "keywords": [
+      "farm", "farmer", "agriculture", "agricultural", "crop", "livestock", "dairy",
+      "poultry", "forestry", "logging", "timber", "fishing", "fishery", "aquaculture",
+      "hunting", "greenhouse", "nursery", "orchard", "horticulture", "agri-food",
+      "temporary foreign worker", "seasonal agricultural worker", "farm worker"
+    ],
+    "seph_notes": "High seasonal variation; temporary foreign worker program affects counts; farm worker programs relevant; BC and Ontario largest employers"
+  },
+  {
+    "code": "21",
+    "name": "Mining, quarrying, and oil and gas extraction",
+    "keywords": [
+      "mining", "mine", "oil sands", "oilfield", "oil field", "oil patch", "natural gas",
+      "petroleum", "quarry", "coal", "potash", "gold mine", "copper mine", "nickel",
+      "oil well", "drilling", "upstream", "oil and gas", "energy sector", "tar sands",
+      "pipeline construction", "fracking", "shale", "LNG", "liquefied natural gas",
+      "Fort McMurray", "oil sands worker", "rig worker", "seismic"
+    ],
+    "seph_notes": "Alberta, BC, Saskatchewan, Newfoundland concentration; commodity price-driven layoffs; distinguish pipeline construction (NAICS 23) from extraction"
+  },
+  {
+    "code": "22",
+    "name": "Utilities",
+    "keywords": [
+      "hydro", "utility", "utilities", "electricity", "power plant", "power utility",
+      "water utility", "wastewater", "natural gas distribution", "Hydro Quebec",
+      "BC Hydro", "Ontario Power Generation", "OPG", "Hydro One", "Enbridge Gas",
+      "electric utility", "nuclear plant", "renewable energy operator"
+    ],
+    "seph_notes": "Crown corporation heavy; strike-prone sector; distinguish from NAICS 21 (gas extraction) and 23 (utility construction)"
+  },
+  {
+    "code": "23",
+    "name": "Construction",
+    "keywords": [
+      "construction", "contractor", "builder", "homebuilder", "infrastructure project",
+      "road construction", "bridge construction", "building trades", "carpenter",
+      "electrician", "plumber", "pipefitter", "ironworker", "crane operator",
+      "general contractor", "subcontractor", "construction worker", "housing start",
+      "building permit", "renovation", "residential construction", "commercial construction"
+    ],
+    "seph_notes": "Highly cyclical; permit-linked hiring; interest rate sensitive; seasonal in most provinces"
+  },
+  {
+    "code": "31-33",
+    "name": "Manufacturing",
+    "keywords": [
+      "manufacturing", "plant", "factory", "assembly plant", "production facility",
+      "auto plant", "automotive", "auto parts", "steel mill", "refinery",
+      "food processing", "meat packing", "pharmaceutical", "aerospace", "aircraft",
+      "shipbuilding", "paper mill", "sawmill", "brewery", "distillery", "winery",
+      "chemical plant", "plastics", "rubber", "textile", "clothing", "furniture",
+      "electronics manufacturing", "computer hardware", "medical device"
+    ],
+    "seph_notes": "Plant closures and mass layoffs most impactful; Ontario and Quebec largest; auto sector highly visible"
+  },
+  {
+    "code": "41",
+    "name": "Wholesale trade",
+    "keywords": [
+      "wholesale", "distributor", "distribution centre", "wholesaler",
+      "food distributor", "pharmaceutical distributor", "wholesale trade",
+      "merchant wholesaler", "supply chain", "warehouse distributor"
+    ],
+    "seph_notes": "Often linked to supply chain disruptions; less visible in news; distinguish from retail and transportation"
+  },
+  {
+    "code": "44-45",
+    "name": "Retail trade",
+    "keywords": [
+      "retail", "retailer", "store closure", "shop", "grocery", "supermarket",
+      "department store", "clothing store", "electronics store", "hardware store",
+      "drug store", "pharmacy chain", "gas station", "car dealership",
+      "online retail", "e-commerce", "shopping centre", "mall store",
+      "Walmart", "Loblaw", "Sobeys", "Metro", "Canadian Tire", "Best Buy",
+      "Dollarama", "Hudson's Bay", "Reitmans", "sporting goods store"
+    ],
+    "seph_notes": "Seasonal hiring peaks at Christmas; store closure chains significant; HBC closures tracked closely"
+  },
+  {
+    "code": "48-49",
+    "name": "Transportation and warehousing",
+    "keywords": [
+      "trucking", "truck driver", "transport", "transportation", "freight",
+      "rail", "railway", "CN Rail", "CP Rail", "VIA Rail", "air cargo",
+      "airline", "airport", "courier", "Canada Post", "postal worker",
+      "bus driver", "transit worker", "ferry", "shipping", "port worker",
+      "longshoreman", "warehouse", "logistics", "supply chain logistics",
+      "Purolator", "FedEx Canada", "UPS Canada", "urban transit"
+    ],
+    "seph_notes": "Strike-prone sector; rail and postal strikes visible; distinguish logistics workers (48-49) from retail warehouse staff (44-45)"
+  },
+  {
+    "code": "51",
+    "name": "Information and cultural industries",
+    "keywords": [
+      "media", "newspaper", "broadcaster", "television", "radio", "CBC",
+      "CTV", "Global News", "Postmedia", "Bell Media", "Rogers Media",
+      "streaming", "tech company", "software", "video game", "gaming",
+      "telecom", "telecommunications", "internet provider", "publishing",
+      "film production", "movie studio", "music industry", "app developer",
+      "data centre", "cloud computing", "tech layoffs", "digital media"
+    ],
+    "seph_notes": "Tech layoffs and media restructuring common; distinguish telecom services (51) from telecom infrastructure construction (23)"
+  },
+  {
+    "code": "52",
+    "name": "Finance and insurance",
+    "keywords": [
+      "bank", "banking", "credit union", "insurance", "insurer",
+      "RBC", "TD Bank", "Scotiabank", "BMO", "CIBC", "National Bank",
+      "Manulife", "Sun Life", "Great-West Life", "Intact", "Desjardins",
+      "mortgage", "investment", "asset management", "financial services",
+      "fintech", "securities", "stock exchange", "brokerage"
+    ],
+    "seph_notes": "Large employers; restructuring and branch closures common; fintech growth offsetting traditional banking losses"
+  },
+  {
+    "code": "53",
+    "name": "Real estate and rental and leasing",
+    "keywords": [
+      "real estate", "property management", "leasing", "rental company",
+      "REIT", "real estate developer", "property developer", "landlord",
+      "car rental", "equipment rental", "property services",
+      "commercial real estate", "real estate broker", "mortgage broker"
+    ],
+    "seph_notes": "Interest rate sensitive; distinguish from construction (23) and finance (52)"
+  },
+  {
+    "code": "54",
+    "name": "Professional, scientific and technical services",
+    "keywords": [
+      "consulting", "consultant", "law firm", "lawyer", "accountant",
+      "accounting firm", "engineering firm", "architect", "scientific research",
+      "R&D", "research and development", "advertising agency", "marketing firm",
+      "management consulting", "IT consulting", "Deloitte", "KPMG", "PwC",
+      "EY", "McKinsey", "government contract", "professional services"
+    ],
+    "seph_notes": "Federal contract awards significant; consulting layoffs tied to government spending; distinguish from NAICS 55"
+  },
+  {
+    "code": "55",
+    "name": "Management of companies and enterprises",
+    "keywords": [
+      "holding company", "corporate headquarters", "head office",
+      "parent company", "conglomerate", "management company"
+    ],
+    "seph_notes": "Rarely the correct classification — flag for human review. Most holding company events belong in the operating subsidiary's sector"
+  },
+  {
+    "code": "56",
+    "name": "Administrative and support, waste management and remediation services",
+    "keywords": [
+      "staffing agency", "temp agency", "temporary workers", "contract workers",
+      "janitorial", "cleaning services", "security guard", "security company",
+      "call centre", "customer service centre", "waste management",
+      "garbage collection", "recycling", "environmental remediation",
+      "landscaping", "office support", "business support services",
+      "payroll processing", "document management"
+    ],
+    "seph_notes": "Temp agency volumes reflect broader labour market; call centre and security sector restructuring common"
+  },
+  {
+    "code": "61",
+    "name": "Educational services",
+    "keywords": [
+      "university", "college", "school board", "school", "teacher",
+      "professor", "teaching assistant", "TA strike", "faculty",
+      "CUPE education", "education workers", "school support staff",
+      "daycare", "childcare", "early childhood educator",
+      "training school", "trade school", "vocational school",
+      "academic strike", "education sector", "student workers"
+    ],
+    "seph_notes": "Strong academic year seasonality; TA and faculty strikes visible; childcare expansion programs create hiring"
+  },
+  {
+    "code": "62",
+    "name": "Health care and social assistance",
+    "keywords": [
+      "hospital", "health care", "healthcare", "long-term care", "LTC",
+      "nursing home", "home care", "home support", "nurse", "doctor",
+      "physician", "health worker", "PSW", "personal support worker",
+      "paramedic", "ambulance", "mental health", "social worker",
+      "social services", "disability services", "CMHA", "addiction services",
+      "community health centre", "health authority", "regional health",
+      "medical staff", "health region"
+    ],
+    "seph_notes": "Largest private-sector employer; public sector strikes common; LTC expansion programs significant"
+  },
+  {
+    "code": "71",
+    "name": "Arts, entertainment and recreation",
+    "keywords": [
+      "NHL", "NBA", "CFL", "sports team", "arena", "stadium",
+      "theatre", "museum", "art gallery", "concert venue", "casino",
+      "gambling", "zoo", "amusement park", "recreation centre",
+      "fitness club", "gym", "performer", "actor", "musician",
+      "IATSE", "entertainment workers", "film crew", "production crew"
+    ],
+    "seph_notes": "Seasonal and event-driven; strike-prone (IATSE, performers' unions); tourism-linked"
+  },
+  {
+    "code": "72",
+    "name": "Accommodation and food services",
+    "keywords": [
+      "hotel", "restaurant", "food service", "hospitality", "bar",
+      "café", "fast food", "quick service", "catering", "motel",
+      "resort", "inn", "Airbnb operator", "tourism", "server",
+      "cook", "chef", "kitchen worker", "hospitality worker",
+      "food and beverage", "accommodation", "lodging"
+    ],
+    "seph_notes": "High turnover sector; pandemic-sensitive; tourism-linked seasonal variation; tipping policy changes relevant"
+  },
+  {
+    "code": "81",
+    "name": "Other services except public administration",
+    "keywords": [
+      "auto repair", "car wash", "hair salon", "barber", "spa",
+      "dry cleaning", "laundry", "pet grooming", "funeral home",
+      "religious organization", "church", "mosque", "synagogue",
+      "non-profit organization", "association", "trade union",
+      "personal care", "body art", "repair shop", "tailoring"
+    ],
+    "seph_notes": "Broad catch-all sector; personal care and repair services; non-profit employment relevant"
+  },
+  {
+    "code": "91",
+    "name": "Public administration",
+    "keywords": [
+      "federal government", "provincial government", "municipal government",
+      "public service", "civil servant", "government worker",
+      "PSAC", "Treasury Board", "government department", "ministry",
+      "government agency", "Crown agency", "public sector",
+      "government hiring", "government cuts", "spending cuts",
+      "budget cuts", "government layoff", "hiring freeze",
+      "government contract", "public administrator", "city hall",
+      "town hall", "government office", "federal employee"
+    ],
+    "seph_notes": "Federal/provincial cuts and hiring freezes directly visible in SEPH; distinguish Crown corporations (by activity) from departments (always 91)"
+  }
+]
