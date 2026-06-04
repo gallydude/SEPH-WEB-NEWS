@@ -11,10 +11,16 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
 
-# Propagate Streamlit Cloud secrets to env vars so subprocesses can read them
-for _key in ["GROQ_API_KEY", "NEWS_API_KEY"]:
-    if _key in st.secrets and not os.environ.get(_key):
-        os.environ[_key] = st.secrets[_key]
+def _subprocess_env() -> dict:
+    """Build env dict for subprocesses, merging OS env with Streamlit secrets."""
+    env = os.environ.copy()
+    try:
+        for key in ["GROQ_API_KEY", "NEWS_API_KEY"]:
+            if key in st.secrets:
+                env[key] = st.secrets[key]
+    except Exception:
+        pass
+    return env
 
 st.set_page_config(
     page_title="SEPH Newsletter Generator",
@@ -71,6 +77,7 @@ def run_subprocess(cmd: list[str]) -> tuple[int, str]:
     result = subprocess.run(
         cmd, capture_output=True, text=True,
         encoding="utf-8", errors="replace", cwd=BASE_DIR,
+        env=_subprocess_env(),
     )
     return result.returncode, result.stdout + result.stderr
 
@@ -158,7 +165,7 @@ with tab_run:
             cmd,
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
             text=True, encoding="utf-8", errors="replace",
-            cwd=BASE_DIR,
+            cwd=BASE_DIR, env=_subprocess_env(),
         )
 
         for raw_line in proc.stdout:
