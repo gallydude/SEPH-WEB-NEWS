@@ -259,6 +259,8 @@ with tab_run:
         if proc.returncode == 0 and success:
             html = load_newsletter_html(selected_month)
             if html:
+                st.session_state["newsletter_html"] = html
+                st.session_state["newsletter_month"] = selected_month
                 st.success(f"Newsletter for **{selected_label}** is ready.")
                 st.download_button(
                     label="⬇  Download newsletter HTML",
@@ -352,7 +354,11 @@ with tab_articles:
 # ── Tab 3: Preview & Download ─────────────────────────────────────────────────
 
 with tab_preview:
-    html = load_newsletter_html(selected_month)
+    # Use session state if available (freshly generated), otherwise read from disk
+    if st.session_state.get("newsletter_month") == selected_month:
+        html = st.session_state.get("newsletter_html") or load_newsletter_html(selected_month)
+    else:
+        html = load_newsletter_html(selected_month)
 
     if not html:
         st.info(f"No newsletter rendered yet for {selected_label}. Run the pipeline first.")
