@@ -6,6 +6,7 @@
 newsletter_*.html
 newsletter_*.txt
 newsletter_*.eml
+!newsletters/newsletter_*.html
 __pycache__/
 *.pyc
 .streamlit/secrets.toml
