@@ -203,6 +203,7 @@ with tab_run:
                     mime="text/html",
                     type="primary",
                     use_container_width=True,
+                    key="download_load_tab",
                 )
                 st.caption("You can also preview it in the **Preview & Download** tab.")
         else:
@@ -322,6 +323,7 @@ with tab_run:
                     mime="text/html",
                     type="primary",
                     use_container_width=True,
+                    key="download_run_tab",
                 )
                 st.caption("You can also preview it in the **Preview & Download** tab.")
         else:
@@ -426,6 +428,7 @@ with tab_preview:
                 mime="text/html",
                 type="primary",
                 use_container_width=True,
+                key="download_preview_tab",
             )
 
         with col_b:
