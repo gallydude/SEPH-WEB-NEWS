@@ -97,7 +97,7 @@ def cmd_run(month: str, skip_collection: bool = False, languages: list = None):
         if not GROQ_API_KEY:
             raise ValueError("GROQ_API_KEY is not set.")
 
-        client = Groq(api_key=GROQ_API_KEY)
+        client = Groq(api_key=GROQ_API_KEY, timeout=30.0)
         total = len(inserted_ids)
         print(f"\n[processor] Processing {total} articles with Groq ({GROQ_MODEL})...")
 
@@ -105,7 +105,7 @@ def cmd_run(month: str, skip_collection: bool = False, languages: list = None):
         # lower rate to avoid thundering-herd rate limit exhaustion.
         _is_ci = bool(os.getenv("GITHUB_ACTIONS"))
         _max_workers = 1 if _is_ci else 4
-        _rate_limit = 12 if _is_ci else 25
+        _rate_limit = 6 if _is_ci else 25
         if _is_ci:
             print(f"[processor] CI environment detected — sequential mode ({_rate_limit} req/min).")
 
