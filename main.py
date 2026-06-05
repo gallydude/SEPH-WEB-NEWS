@@ -143,6 +143,17 @@ def cmd_run(month: str, skip_collection: bool = False, languages: list = None):
 
         included_count = sum(results)
         print(f"[processor] Done. {included_count}/{total} articles marked for newsletter.")
+
+        # Diagnostic breakdown — especially useful in CI where results can differ
+        from collections import Counter
+        all_fields = [t[2] for t in tasks]  # article dicts were mutated in-place
+        score_dist = Counter(a.get("relevance_score") for a in all_fields)
+        excl_dist = Counter(
+            (a.get("exclusion_reason") or "included")
+            for a in all_fields
+        )
+        print(f"[processor] Score distribution: {dict(sorted(score_dist.items()))}")
+        print(f"[processor] Inclusion/exclusion breakdown: {dict(excl_dist)}")
     else:
         print("[main] No articles to process.")
         included_count = 0

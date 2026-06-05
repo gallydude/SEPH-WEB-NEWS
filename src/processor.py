@@ -110,21 +110,36 @@ def process_article(article: dict, client: Groq, _retry: int = 0) -> dict:
         if override and parsed.get("naics_code") in ("UNCLEAR", "55", ""):
             parsed["naics_code"] = override
 
-        # Minimum relevance score filter
-        if parsed.get("relevance_score", 0) < MIN_RELEVANCE_SCORE:
-            parsed["include_in_newsletter"] = False
-
-        # Significance filter: require 100+ workers affected, unless it's a strike/lockout
-        # (worker count unknown = keep; strikes always kept regardless of size)
+        score = parsed.get("relevance_score", 1)
         workers = parsed.get("workers_affected")
         event = parsed.get("event_type", "")
         is_strike = event in ("Strike", "Lockout")
         exclusion_reason = ""
 
-        if parsed.get("include_in_newsletter", True) and not is_strike:
+        # Treat workers=0 as unknown (Groq uses 0 when count isn't in the article)
+        if workers == 0:
+            workers = None
+
+        # Inclusion logic:
+        # - Score >= 4: always include (robust against Groq being too conservative)
+        # - Score 2-3: include only if Groq also agrees
+        # - Score < 2: always exclude
+        groq_says_include = parsed.get("include_in_newsletter", False)
+        if score >= 4:
+            include = True
+        elif score >= MIN_RELEVANCE_SCORE:
+            include = bool(groq_says_include)
+        else:
+            include = False
+
+        # Workers filter: exclude non-strikes with a confirmed small worker count
+        if include and not is_strike:
             if workers is not None and workers < 100:
-                parsed["include_in_newsletter"] = False
+                include = False
                 exclusion_reason = f"Below 100-worker threshold ({workers} reported)"
+
+        if not include and not exclusion_reason:
+            exclusion_reason = f"score={score}; Groq include={groq_says_include}"
 
         article.update({
             "summary": parsed.get("summary", ""),
@@ -135,9 +150,9 @@ def process_article(article: dict, client: Groq, _retry: int = 0) -> dict:
             "province": parsed.get("province", "Not specified"),
             "impact_direction": parsed.get("impact_direction", "Uncertain"),
             "workers_affected": workers,
-            "relevance_score": parsed.get("relevance_score", 1),
+            "relevance_score": score,
             "relevance_justification": parsed.get("relevance_justification", ""),
-            "included_in_newsletter": 1 if parsed.get("include_in_newsletter", False) else 0,
+            "included_in_newsletter": 1 if include else 0,
             "exclusion_reason": exclusion_reason,
             "classified_by": f"groq/{GROQ_MODEL}",
         })
