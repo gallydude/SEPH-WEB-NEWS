@@ -101,7 +101,15 @@ def cmd_run(month: str, skip_collection: bool = False, languages: list = None):
         total = len(inserted_ids)
         print(f"\n[processor] Processing {total} articles with Groq ({GROQ_MODEL})...")
 
-        limiter = _RateLimiter(calls_per_minute=25)
+        # GitHub Actions shares IPs with many other users — use 1 worker and a
+        # lower rate to avoid thundering-herd rate limit exhaustion.
+        _is_ci = bool(os.getenv("GITHUB_ACTIONS"))
+        _max_workers = 1 if _is_ci else 4
+        _rate_limit = 12 if _is_ci else 25
+        if _is_ci:
+            print(f"[processor] CI environment detected — sequential mode ({_rate_limit} req/min).")
+
+        limiter = _RateLimiter(calls_per_minute=_rate_limit)
         _proc_start = _time.monotonic()
 
         def _process_one(args):
@@ -130,7 +138,7 @@ def cmd_run(month: str, skip_collection: bool = False, languages: list = None):
             return fields["included_in_newsletter"]
 
         tasks = [(i, article_id, article) for i, (article_id, article) in enumerate(inserted_ids, 1)]
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=_max_workers) as executor:
             results = list(executor.map(_process_one, tasks))
 
         included_count = sum(results)
