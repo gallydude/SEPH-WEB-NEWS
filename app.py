@@ -72,7 +72,14 @@ def is_past_month(month: str) -> bool:
     return month < date.today().strftime("%Y-%m")
 
 
+def has_committed_newsletter(month: str) -> bool:
+    """True if a newsletter HTML was committed to newsletters/ by GitHub Actions."""
+    slug = month.replace("-", "_")
+    return os.path.exists(os.path.join(BASE_DIR, "newsletters", f"newsletter_{slug}.html"))
+
+
 def has_newsletter_data(month: str) -> bool:
+    """True if the local DB has processed articles for this month."""
     try:
         from src.database import init_db, _connect
         init_db()
@@ -167,9 +174,35 @@ tab_run, tab_articles, tab_preview = st.tabs([
 with tab_run:
     st.markdown("### Generate Newsletter")
 
-    _past_with_data = is_past_month(selected_month) and has_newsletter_data(selected_month)
+    _committed = has_committed_newsletter(selected_month)
+    _past_with_data = not _committed and is_past_month(selected_month) and has_newsletter_data(selected_month)
 
-    if _past_with_data:
+    if _committed:
+        st.info(
+            f"**{selected_label}** was generated automatically. "
+            "Open the **Preview & Download** tab to view and download it."
+        )
+        html = load_newsletter_html(selected_month)
+        if html:
+            st.session_state["newsletter_html"] = html
+            st.session_state["newsletter_month"] = selected_month
+        col_dl, col_rerun = st.columns([1, 1])
+        with col_dl:
+            if html:
+                st.download_button(
+                    label="⬇  Download newsletter HTML",
+                    data=html,
+                    file_name=f"seph_newsletter_{selected_month}.html",
+                    mime="text/html",
+                    type="primary",
+                    use_container_width=True,
+                    key="download_load_tab",
+                )
+        with col_rerun:
+            run_btn = st.button("↺  Re-run full pipeline", use_container_width=True,
+                                help="Collects fresh articles and overwrites the existing newsletter.")
+        load_btn = False
+    elif _past_with_data:
         st.info(
             f"**{selected_label}** is a past month with existing data in the database. "
             "Loading from the database is instant — no need to re-run the pipeline."
@@ -188,7 +221,7 @@ with tab_run:
         with col_skip:
             no_collect = st.checkbox("Skip collection — reprocess articles already in the database")
 
-    if not _past_with_data and not inc_en and not inc_fr:
+    if not _committed and not _past_with_data and not inc_en and not inc_fr:
         st.warning("Select at least one language in the sidebar before running.")
 
     # ── Fast path: load from DB ───────────────────────────────────────────────
