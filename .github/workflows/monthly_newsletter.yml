@@ -43,6 +43,7 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
           NEWSLETTER_MONTH: ${{ steps.month.outputs.value }}
+          PYTHONUNBUFFERED: "1"
         run: python main.py run --month $NEWSLETTER_MONTH
 
       - name: Move newsletter to tracked folder
