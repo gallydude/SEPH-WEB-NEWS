@@ -78,6 +78,32 @@ def cmd_run(month: str, skip_collection: bool = False, languages: list = None):
     else:
         articles = collect_all(month, lookback_days=LOOKBACK_DAYS,
                                languages=languages or ["en", "fr"])
+
+        # Pre-filter: drop articles with no Canadian signal before hitting Groq.
+        # French articles pass automatically (already Canada-targeted queries).
+        _CA_TERMS = {
+            "canada", "canadian", "ontario", "quebec", "québec", "alberta",
+            "british columbia", "b.c.", "bc", "saskatchewan", "manitoba",
+            "nova scotia", "new brunswick", "newfoundland", "pei",
+            "prince edward", "northwest territories", "yukon", "nunavut",
+            "toronto", "montreal", "montréal", "vancouver", "ottawa",
+            "calgary", "edmonton", "winnipeg", "halifax", "regina",
+            "unifor", "cupe", "psac", "ufcw", "teamsters canada",
+        }
+        pre_filtered = []
+        for a in articles:
+            lang = (a.get("language") or "en").lower()
+            if lang != "en":
+                pre_filtered.append(a)
+                continue
+            text = (a.get("headline", "") + " " + (a.get("description") or "")).lower()
+            if any(t in text for t in _CA_TERMS):
+                pre_filtered.append(a)
+        dropped = len(articles) - len(pre_filtered)
+        if dropped:
+            print(f"[main] Pre-filter dropped {dropped} non-Canadian articles ({len(pre_filtered)} remain).")
+        articles = pre_filtered
+
         inserted_ids = []
         duplicates = 0
         for article in articles:
