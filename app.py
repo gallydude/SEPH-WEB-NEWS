@@ -132,7 +132,7 @@ body, .stApp, .stMarkdown, p, span, div, label, h1, h2, h3, h4, h5, h6, button, 
 }
 [data-testid="stSidebar"] > div { background: transparent !important; }
 [data-testid="stSidebar"] section { background: transparent !important; }
-[data-testid="stSidebar"] label { color: #A8BECC !important; font-size: 12px !important; font-weight: 500 !important; }
+[data-testid="stSidebar"] label { color: #FFFFFF !important; font-size: 12px !important; font-weight: 500 !important; }
 [data-testid="stSidebar"] .stMarkdown p,
 [data-testid="stSidebar"] .stMarkdown strong { color: #CBD5E1 !important; }
 [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.07) !important; margin: 6px 0 !important; }
