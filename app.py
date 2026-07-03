@@ -142,7 +142,10 @@ body, .stApp, .stMarkdown, p, span, div, label, h1, h2, h3, h4, h5, h6, button, 
     border-radius: 8px !important;
 }
 [data-testid="stSidebar"] [data-baseweb="select"] * { color: #0F172A !important; }
-[data-testid="stSidebar"] [data-testid="stCheckbox"] label { color: #FFFFFF !important; }
+[data-testid="stSidebar"] [data-testid="stCheckbox"] label,
+[data-testid="stSidebar"] .stCheckbox label,
+[data-testid="stSidebar"] [data-testid="stCheckbox"] span,
+[data-testid="stSidebar"] .stCheckbox span { color: #FFFFFF !important; }
 [data-testid="stSidebar"] [data-baseweb="popover"] { background: #1E3158 !important; }
 
 /* Sidebar brand */
