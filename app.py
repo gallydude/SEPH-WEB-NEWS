@@ -47,12 +47,67 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-[data-testid="stSidebar"] { min-width: 270px; max-width: 270px; }
-div[data-testid="metric-container"] {
-    background: #f0f5fa; padding: 12px 16px;
-    border-radius: 8px; border-left: 4px solid #1a3a5c;
+/* ── Page background ── */
+[data-testid="stAppViewContainer"] { background: #F8FAFC; }
+.main .block-container { padding-top: 1.5rem; padding-bottom: 2rem; }
+
+/* ── Sidebar ── */
+[data-testid="stSidebar"] {
+    min-width: 280px; max-width: 280px;
+    background: linear-gradient(180deg, #1B2A4A 0%, #1E3358 100%);
 }
-.stTabs [data-baseweb="tab"] { font-size: 14px; padding: 8px 20px; }
+[data-testid="stSidebar"] .stMarkdown p,
+[data-testid="stSidebar"] .stMarkdown h2,
+[data-testid="stSidebar"] .stMarkdown strong { color: #F1F5F9 !important; }
+[data-testid="stSidebar"] [data-testid="stCaption"] { color: #94A3B8 !important; }
+[data-testid="stSidebar"] label { color: #CBD5E1 !important; }
+[data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.15) !important; }
+
+/* ── Metric cards ── */
+div[data-testid="metric-container"] {
+    background: #FFFFFF;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    border-left: 4px solid #1B2A4A;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+div[data-testid="metric-container"] [data-testid="stMetricLabel"] {
+    font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em; color: #64748B !important;
+}
+div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+    color: #1B2A4A !important; font-weight: 700;
+}
+
+/* ── Tabs ── */
+.stTabs [data-baseweb="tab-list"] {
+    background: #EFF3F8; border-radius: 10px;
+    padding: 4px; gap: 2px; border: 1px solid #E2E8F0;
+}
+.stTabs [data-baseweb="tab"] {
+    font-size: 14px; font-weight: 500; padding: 8px 22px;
+    border-radius: 8px; color: #475569; background: transparent; border: none;
+}
+.stTabs [aria-selected="true"] {
+    background: #1B2A4A !important; color: #FFFFFF !important;
+    box-shadow: 0 1px 3px rgba(27,42,74,0.3);
+}
+.stTabs [data-baseweb="tab-highlight"],
+.stTabs [data-baseweb="tab-border"] { display: none; }
+
+/* ── Typography ── */
+h1 { color: #1B2A4A !important; font-weight: 700 !important; letter-spacing: -0.02em; }
+h2, h3 { color: #1E3358 !important; }
+
+/* ── Expander ── */
+[data-testid="stExpander"] {
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 10px !important; background: #FFFFFF;
+}
+
+/* ── Alerts ── */
+[data-testid="stAlert"] { border-radius: 10px !important; }
 </style>
 """, unsafe_allow_html=True)
 
