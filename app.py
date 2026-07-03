@@ -67,9 +67,9 @@ st.markdown("""
     --shadow-lg:  0 10px 30px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
 }
 
-/* ── Global font ── */
-*, html, body, .stApp, .stMarkdown, button, input, select {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+/* ── Global font (avoid * !important — it breaks Material Icons) ── */
+body, .stApp, .stMarkdown, p, span, div, label, h1, h2, h3, h4, h5, h6, button, input, select, td, th {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* ── App background ── */
@@ -132,7 +132,7 @@ st.markdown("""
 }
 [data-testid="stSidebar"] > div { background: transparent !important; }
 [data-testid="stSidebar"] section { background: transparent !important; }
-[data-testid="stSidebar"] label { color: #64748B !important; font-size: 12px !important; font-weight: 500 !important; }
+[data-testid="stSidebar"] label { color: #A8BECC !important; font-size: 12px !important; font-weight: 500 !important; }
 [data-testid="stSidebar"] .stMarkdown p,
 [data-testid="stSidebar"] .stMarkdown strong { color: #CBD5E1 !important; }
 [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.07) !important; margin: 6px 0 !important; }
@@ -162,11 +162,11 @@ st.markdown("""
     letter-spacing: -0.02em; line-height: 1.1;
 }
 .sidebar-brand-sub {
-    color: #475569; font-size: 10.5px; font-weight: 600;
+    color: #7B96B2; font-size: 10.5px; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px;
 }
 .sidebar-section {
-    color: #334155; font-size: 10px; font-weight: 700;
+    color: #6B8CAE; font-size: 10px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.1em;
     padding: 18px 0 8px;
 }
@@ -176,9 +176,9 @@ st.markdown("""
 }
 .sidebar-footer-row {
     display: flex; align-items: center; gap: 8px;
-    padding: 4px 0; color: #334155; font-size: 11.5px; font-weight: 500;
+    padding: 4px 0; color: #7B96B2; font-size: 11.5px; font-weight: 500;
 }
-.sidebar-footer-row span { color: #475569; }
+.sidebar-footer-row span { color: #94A3B8; }
 
 /* ── Metric cards ── */
 div[data-testid="metric-container"] {
