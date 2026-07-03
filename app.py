@@ -137,11 +137,12 @@ body, .stApp, .stMarkdown, p, span, div, label, h1, h2, h3, h4, h5, h6, button, 
 [data-testid="stSidebar"] .stMarkdown strong { color: #CBD5E1 !important; }
 [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.07) !important; margin: 6px 0 !important; }
 [data-testid="stSidebar"] [data-baseweb="select"] {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: #FFFFFF !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
     border-radius: 8px !important;
 }
-[data-testid="stSidebar"] [data-baseweb="select"] * { color: #CBD5E1 !important; }
+[data-testid="stSidebar"] [data-baseweb="select"] * { color: #0F172A !important; }
+[data-testid="stSidebar"] [data-testid="stCheckbox"] label { color: #FFFFFF !important; }
 [data-testid="stSidebar"] [data-baseweb="popover"] { background: #1E3158 !important; }
 
 /* Sidebar brand */
