@@ -148,13 +148,14 @@ body, .stApp, .stMarkdown, p, span, div, label, h1, h2, h3, h4, h5, h6, button, 
 
 /* Sidebar brand */
 .sidebar-brand {
-    display: flex; align-items: center; gap: 13px;
+    display: flex; flex-direction: column; gap: 12px;
     padding: 6px 0 22px;
 }
 .sidebar-logo {
-    width: 46px; height: 46px; flex-shrink: 0;
+    width: 100%; height: auto;
     border-radius: 10px; object-fit: contain;
-    background: #FFFFFF; padding: 4px;
+    background: #FFFFFF; padding: 8px;
+    display: block;
 }
 .sidebar-brand-title {
     color: #F1F5F9; font-size: 18px; font-weight: 800;
