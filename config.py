@@ -7,7 +7,7 @@ load_dotenv(override=True)
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
-GROQ_MODEL = "gpt-oss-20b"
+GROQ_MODEL = "openai/gpt-oss-20b"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "seph_articles.db")
