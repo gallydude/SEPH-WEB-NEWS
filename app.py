@@ -155,7 +155,7 @@ with st.sidebar:
         inc_fr = st.checkbox("🇫🇷 French", value=True)
 
     st.divider()
-    st.caption("Model: llama-3.1-8b-instant · Groq")
+    st.caption("Model: GPT OSS 20B · Groq")
     st.caption("Source: Google News RSS + NewsAPI")
 
 
