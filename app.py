@@ -46,68 +46,232 @@ st.set_page_config(
 )
 
 st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── Page background ── */
-[data-testid="stAppViewContainer"] { background: #F8FAFC; }
-.main .block-container { padding-top: 1.5rem; padding-bottom: 2rem; }
+:root {
+    --navy:       #1B2A4A;
+    --navy-mid:   #243556;
+    --navy-dark:  #111E35;
+    --teal:       #0EA5C9;
+    --teal-light: #38BDF8;
+    --slate:      #475569;
+    --slate-light:#94A3B8;
+    --bg:         #EFF3F8;
+    --surface:    #FFFFFF;
+    --border:     #E2E8F0;
+    --text:       #0F172A;
+    --muted:      #64748B;
+    --radius:     12px;
+    --shadow-sm:  0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow:     0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-lg:  0 10px 30px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
+}
+
+/* ── Global font ── */
+*, html, body, .stApp, .stMarkdown, button, input, select {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* ── App background ── */
+[data-testid="stAppViewContainer"] { background: var(--bg); }
+.main .block-container {
+    padding-top: 0 !important;
+    padding-bottom: 3rem;
+    max-width: 1200px;
+}
+
+/* ── Hero header ── */
+.page-hero {
+    background: linear-gradient(135deg, #111E35 0%, #1B2A4A 45%, #1a3f6e 100%);
+    margin: -1rem -4rem 2.5rem -4rem;
+    padding: 2.5rem 4rem 2.5rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.page-hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, rgba(14,165,201,0.18) 0%, transparent 65%);
+    pointer-events: none;
+}
+.page-hero::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 30%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 65%);
+    pointer-events: none;
+}
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(14,165,201,0.15);
+    border: 1px solid rgba(14,165,201,0.35);
+    color: #7DD3FC;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 100px;
+    margin-bottom: 14px;
+}
+.hero-title {
+    color: #FFFFFF !important;
+    font-size: 2.1rem !important; font-weight: 800 !important;
+    letter-spacing: -0.03em; line-height: 1.1;
+    margin: 0 0 10px 0 !important;
+}
+.hero-subtitle {
+    color: #94A3B8; font-size: 14px; margin: 0;
+    font-weight: 400;
+}
+.hero-subtitle strong { color: #CBD5E1; font-weight: 600; }
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
     min-width: 280px; max-width: 280px;
-    background: linear-gradient(180deg, #1B2A4A 0%, #1E3358 100%);
+    background: var(--navy-dark) !important;
+    border-right: 1px solid rgba(255,255,255,0.05);
 }
+[data-testid="stSidebar"] > div { background: transparent !important; }
+[data-testid="stSidebar"] section { background: transparent !important; }
+[data-testid="stSidebar"] label { color: #64748B !important; font-size: 12px !important; font-weight: 500 !important; }
 [data-testid="stSidebar"] .stMarkdown p,
-[data-testid="stSidebar"] .stMarkdown h2,
-[data-testid="stSidebar"] .stMarkdown strong { color: #F1F5F9 !important; }
-[data-testid="stSidebar"] [data-testid="stCaption"] { color: #94A3B8 !important; }
-[data-testid="stSidebar"] label { color: #CBD5E1 !important; }
-[data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.15) !important; }
+[data-testid="stSidebar"] .stMarkdown strong { color: #CBD5E1 !important; }
+[data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.07) !important; margin: 6px 0 !important; }
+[data-testid="stSidebar"] [data-baseweb="select"] {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 8px !important;
+}
+[data-testid="stSidebar"] [data-baseweb="select"] * { color: #CBD5E1 !important; }
+[data-testid="stSidebar"] [data-baseweb="popover"] { background: #1E3158 !important; }
+
+/* Sidebar brand */
+.sidebar-brand {
+    display: flex; align-items: center; gap: 13px;
+    padding: 6px 0 22px;
+}
+.sidebar-brand-icon {
+    width: 46px; height: 46px; flex-shrink: 0;
+    background: linear-gradient(135deg, #0EA5C9 0%, #0369A1 100%);
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 4px 14px rgba(14,165,201,0.45);
+}
+.sidebar-brand-title {
+    color: #F1F5F9; font-size: 18px; font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.1;
+}
+.sidebar-brand-sub {
+    color: #475569; font-size: 10.5px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px;
+}
+.sidebar-section {
+    color: #334155; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 18px 0 8px;
+}
+.sidebar-footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 14px; margin-top: 4px;
+}
+.sidebar-footer-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 0; color: #334155; font-size: 11.5px; font-weight: 500;
+}
+.sidebar-footer-row span { color: #475569; }
 
 /* ── Metric cards ── */
 div[data-testid="metric-container"] {
-    background: #FFFFFF;
-    padding: 16px 20px;
-    border-radius: 12px;
-    border: 1px solid #E2E8F0;
-    border-left: 4px solid #1B2A4A;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    background: var(--surface);
+    padding: 20px 22px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--navy);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+div[data-testid="metric-container"]:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
 }
 div[data-testid="metric-container"] [data-testid="stMetricLabel"] {
-    font-size: 12px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.05em; color: #64748B !important;
+    font-size: 11px !important; font-weight: 700 !important;
+    text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted) !important;
 }
 div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-    color: #1B2A4A !important; font-weight: 700;
+    color: var(--navy) !important; font-weight: 800 !important; font-size: 2rem !important;
+    letter-spacing: -0.02em;
 }
 
 /* ── Tabs ── */
 .stTabs [data-baseweb="tab-list"] {
-    background: #EFF3F8; border-radius: 10px;
-    padding: 4px; gap: 2px; border: 1px solid #E2E8F0;
+    background: var(--surface); border-radius: var(--radius);
+    padding: 5px; gap: 3px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
 }
 .stTabs [data-baseweb="tab"] {
-    font-size: 14px; font-weight: 500; padding: 8px 22px;
-    border-radius: 8px; color: #475569; background: transparent; border: none;
+    font-size: 13px; font-weight: 600; padding: 9px 24px;
+    border-radius: 9px; color: var(--slate);
+    background: transparent; border: none;
+    transition: all 0.15s ease;
+}
+.stTabs [data-baseweb="tab"]:hover:not([aria-selected="true"]) {
+    background: #F1F5F9; color: var(--navy);
 }
 .stTabs [aria-selected="true"] {
-    background: #1B2A4A !important; color: #FFFFFF !important;
-    box-shadow: 0 1px 3px rgba(27,42,74,0.3);
+    background: linear-gradient(135deg, var(--navy) 0%, #243E6E 100%) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 10px rgba(27,42,74,0.35);
 }
 .stTabs [data-baseweb="tab-highlight"],
 .stTabs [data-baseweb="tab-border"] { display: none; }
 
-/* ── Typography ── */
-h1 { color: #1B2A4A !important; font-weight: 700 !important; letter-spacing: -0.02em; }
-h2, h3 { color: #1E3358 !important; }
-
-/* ── Expander ── */
-[data-testid="stExpander"] {
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 10px !important; background: #FFFFFF;
+/* ── Buttons ── */
+.stButton > button, .stDownloadButton > button {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important; border-radius: 9px !important;
+    transition: all 0.18s ease !important; letter-spacing: -0.01em !important;
 }
+.stButton > button[kind="primary"],
+.stDownloadButton > button[kind="primary"] {
+    background: linear-gradient(135deg, #1B2A4A 0%, #243E6E 100%) !important;
+    border: none !important;
+    box-shadow: 0 2px 10px rgba(27,42,74,0.3) !important;
+}
+.stButton > button[kind="primary"]:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 18px rgba(27,42,74,0.4) !important; }
+.stButton > button:not([kind="primary"]) {
+    background: var(--surface) !important; border: 1.5px solid var(--border) !important; color: var(--slate) !important;
+}
+.stButton > button:not([kind="primary"]):hover { border-color: var(--navy) !important; color: var(--navy) !important; transform: translateY(-1px) !important; }
+
+/* ── Progress bar ── */
+.stProgress > div > div { background: #E2E8F0 !important; border-radius: 100px; height: 8px !important; }
+.stProgress > div > div > div { background: linear-gradient(90deg, #1B2A4A, #0EA5C9) !important; border-radius: 100px; transition: width 0.4s ease; }
+
+/* ── Expanders ── */
+[data-testid="stExpander"] {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-sm);
+}
+[data-testid="stExpander"] summary { font-weight: 600 !important; font-size: 13px !important; }
 
 /* ── Alerts ── */
-[data-testid="stAlert"] { border-radius: 10px !important; }
+[data-testid="stAlert"] { border-radius: var(--radius) !important; border: none !important; box-shadow: var(--shadow-sm) !important; }
+
+/* ── Dataframe ── */
+[data-testid="stDataFrame"] {
+    border-radius: var(--radius) !important; overflow: hidden;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border) !important;
+}
+
+/* ── Typography ── */
+h1 { color: var(--navy) !important; font-weight: 800 !important; letter-spacing: -0.03em; }
+h2 { color: var(--navy) !important; font-weight: 700 !important; }
+h3 { color: #1E3358 !important; font-weight: 600 !important; }
+hr { border-color: var(--border) !important; }
+[data-testid="stCaption"] { color: var(--muted) !important; font-size: 12px !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -186,11 +350,18 @@ def run_subprocess(cmd: list[str]) -> tuple[int, str]:
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 
 with st.sidebar:
-    st.markdown("## 📰 SEPH Newsletter")
-    st.caption("Labour Market Intelligence Generator")
+    st.markdown("""
+    <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">📰</div>
+        <div>
+            <div class="sidebar-brand-title">SEPH</div>
+            <div class="sidebar-brand-sub">Newsletter Generator</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     st.divider()
 
-    st.markdown("**Reference Month**")
+    st.markdown('<div class="sidebar-section">Reference Month</div>', unsafe_allow_html=True)
     month_options = get_month_options(36)
     month_labels = [o[0] for o in month_options]
     month_values = [o[1] for o in month_options]
@@ -202,7 +373,7 @@ with st.sidebar:
     selected_month = month_values[idx]
     selected_label = month_labels[idx]
 
-    st.markdown("**Languages**")
+    st.markdown('<div class="sidebar-section">Languages</div>', unsafe_allow_html=True)
     col_en, col_fr = st.columns(2)
     with col_en:
         inc_en = st.checkbox("🇨🇦 English", value=True)
@@ -210,14 +381,23 @@ with st.sidebar:
         inc_fr = st.checkbox("🇫🇷 French", value=True)
 
     st.divider()
-    st.caption("Model: GPT OSS 20B · Groq")
-    st.caption("Source: Google News RSS + NewsAPI")
+    st.markdown("""
+    <div class="sidebar-footer">
+        <div class="sidebar-footer-row">⚡ <span>GPT OSS 20B · Groq</span></div>
+        <div class="sidebar-footer-row">📡 <span>Google News RSS · NewsAPI</span></div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ── Page header ───────────────────────────────────────────────────────────────
 
-st.markdown("# SEPH Labour Market Intelligence")
-st.markdown(f"Reference month: **{selected_label}**")
+st.markdown(f"""
+<div class="page-hero">
+    <div class="hero-badge">🇨🇦 Statistics Canada · Labour Market Program</div>
+    <div class="hero-title">SEPH Labour Market Intelligence</div>
+    <p class="hero-subtitle">Reference period: <strong>{selected_label}</strong></p>
+</div>
+""", unsafe_allow_html=True)
 
 tab_run, tab_articles, tab_preview = st.tabs([
     "▶  Run Pipeline", "📊  Articles", "📄  Preview & Download",
