@@ -39,7 +39,7 @@ if not os.path.exists(_env_path):
         pass
 
 st.set_page_config(
-    page_title="SEPH Newsletter Generator",
+    page_title="CLMI Newsletter Generator",
     page_icon="📰",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -355,7 +355,7 @@ with st.sidebar:
         <img src="https://tse1.mm.bing.net/th/id/OIP.zlgVzPGAKRwJC7QbfljDKgHaA0?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
              class="sidebar-logo" alt="Logo">
         <div>
-            <div class="sidebar-brand-title">SEPH</div>
+            <div class="sidebar-brand-title">CLMI</div>
             <div class="sidebar-brand-sub">Newsletter Generator</div>
         </div>
     </div>
@@ -395,7 +395,7 @@ with st.sidebar:
 st.markdown(f"""
 <div class="page-hero">
     <div class="hero-badge">🇨🇦 Statistics Canada · Labour Market Program</div>
-    <div class="hero-title">SEPH Labour Market Intelligence</div>
+    <div class="hero-title">CLMI Labour Market Intelligence</div>
     <p class="hero-subtitle">Reference period: <strong>{selected_label}</strong></p>
 </div>
 """, unsafe_allow_html=True)

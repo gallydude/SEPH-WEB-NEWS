@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SEPH Newsletter Generator — CLI entry point
+CLMI Newsletter Generator — CLI entry point
 
 Usage:
   python main.py run    --month 2026-04   # Full pipeline (collect, process, save draft)
@@ -225,7 +225,7 @@ def cmd_list():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="SEPH Newsletter Generator")
+    parser = argparse.ArgumentParser(description="CLMI Newsletter Generator")
     subparsers = parser.add_subparsers(dest="command")
 
     p_run = subparsers.add_parser("run", help="Full pipeline: collect, process, save draft")
