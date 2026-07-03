@@ -142,10 +142,8 @@ body, .stApp, .stMarkdown, p, span, div, label, h1, h2, h3, h4, h5, h6, button, 
     border-radius: 8px !important;
 }
 [data-testid="stSidebar"] [data-baseweb="select"] * { color: #0F172A !important; }
-[data-testid="stSidebar"] [data-testid="stCheckbox"] label,
-[data-testid="stSidebar"] .stCheckbox label,
-[data-testid="stSidebar"] [data-testid="stCheckbox"] span,
-[data-testid="stSidebar"] .stCheckbox span { color: #FFFFFF !important; }
+[data-testid="stSidebar"] [data-testid="stCheckbox"] *,
+[data-testid="stSidebar"] .stCheckbox * { color: #FFFFFF !important; }
 [data-testid="stSidebar"] [data-baseweb="popover"] { background: #1E3158 !important; }
 
 /* Sidebar brand */
@@ -153,13 +151,10 @@ body, .stApp, .stMarkdown, p, span, div, label, h1, h2, h3, h4, h5, h6, button, 
     display: flex; align-items: center; gap: 13px;
     padding: 6px 0 22px;
 }
-.sidebar-brand-icon {
+.sidebar-logo {
     width: 46px; height: 46px; flex-shrink: 0;
-    background: linear-gradient(135deg, #0EA5C9 0%, #0369A1 100%);
-    border-radius: 13px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    box-shadow: 0 4px 14px rgba(14,165,201,0.45);
+    border-radius: 10px; object-fit: contain;
+    background: #FFFFFF; padding: 4px;
 }
 .sidebar-brand-title {
     color: #F1F5F9; font-size: 18px; font-weight: 800;
@@ -356,7 +351,8 @@ def run_subprocess(cmd: list[str]) -> tuple[int, str]:
 with st.sidebar:
     st.markdown("""
     <div class="sidebar-brand">
-        <div class="sidebar-brand-icon">📰</div>
+        <img src="https://tse1.mm.bing.net/th/id/OIP.zlgVzPGAKRwJC7QbfljDKgHaA0?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+             class="sidebar-logo" alt="Logo">
         <div>
             <div class="sidebar-brand-title">SEPH</div>
             <div class="sidebar-brand-sub">Newsletter Generator</div>
